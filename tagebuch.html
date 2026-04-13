@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Room – Gruppe 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;padding:12px}
+.wrap{max-width:620px;margin:0 auto}
+h1{color:#58a6ff;font-size:1.3rem;text-align:center;margin-bottom:4px}
+.sub{color:#8b949e;text-align:center;font-size:.85rem;margin-bottom:16px}
+.gsel{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px}
+.gbtn{padding:10px 12px;border-radius:8px;border:2px solid #30363d;background:#161b22;color:#c9d1d9;cursor:pointer;font-size:.85rem;font-weight:600;line-height:1.3;text-align:center;flex:1;min-width:100px}
+.gbtn:hover,.gbtn.sel{border-color:#58a6ff;background:#1f4068;color:#58a6ff}
+.panel{display:block}
+.intro{background:#1a2733;border-left:3px solid #58a6ff;padding:10px 14px;border-radius:4px;margin-bottom:14px;font-size:.85rem;color:#c9d1d9;line-height:1.5}
+.q{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;margin-bottom:10px}
+.q .stem{font-size:.88rem;font-weight:600;color:#c9d1d9;margin-bottom:8px;line-height:1.4}
+.opts label{display:block;padding:6px 10px;margin:2px 0;border-radius:5px;cursor:pointer;font-size:.83rem;transition:background .15s;border:1px solid transparent}
+.opts label:hover{background:#1a2733}
+.opts input{margin-right:8px}
+.q.ok{border-color:#238636;background:#0d2818}.q.bad{border-color:#f85149;background:#2d1215}
+.q.ok .stem::after{content:" ✅"}.q.bad .stem::after{content:" ❌"}
+.submit{display:block;width:100%;padding:12px;border-radius:8px;border:none;background:#238636;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;margin:14px 0}
+.submit:hover{background:#2ea043}
+.result{text-align:center;padding:20px;border-radius:10px;margin-top:14px;display:none}
+.result.win{display:block;background:#0d2818;border:2px solid #238636}
+.result h2{color:#3fb950;font-size:1.2rem}
+.result .code{font-size:2.5rem;font-weight:700;color:#fff;letter-spacing:6px;margin:10px 0}
+.result .hint{color:#c9d1d9;font-size:.85rem;line-height:1.5;margin-top:10px}
+.result.fail{display:block;background:#2d1215;border:2px solid #f85149}
+.result.fail h2{color:#f85149}
+.score{color:#8b949e;text-align:center;font-size:.85rem;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🔓 Escape the Motivation Crisis</h1>
+<p class="sub">Beantwortet die Fragen zu eurer Aufgabe</p>
+
+<div class="panel" id="panel">
+  <div class="intro">
+    <strong>Gruppe 2 – Tagebuch</strong><br>
+    Ihr habt Lauras Tagebuch analysiert und die Frustration (−) bzw. Befriedigung (+) ihrer psychologischen Grundbedürfnisse markiert. Beantwortet alle 8 Fragen richtig, um euer Codewort zu erhalten.
+  </div>
+
+  <div class="q" id="q0">
+    <div class="stem">1. Welche der folgenden Situationen aus dem Tagebuch ist ein klares Beispiel für die Frustration des Autonomiebedürfnisses (−)?</div>
+    <div class="opts">
+      <label><input type="radio" name="q0" value="0"> Die Mutter bedankt sich bei Laura.</label>
+      <label><input type="radio" name="q0" value="1"> Herr Müller weist Fälle zu, ohne nach Kapazitäten zu fragen.</label>
+      <label><input type="radio" name="q0" value="2"> Laura merkt, dass sie seit drei Jahren nichts geschrieben hat.</label>
+      <label><input type="radio" name="q0" value="3"> Anna bietet ihre Unterstützung an.</label>
+    </div>
+  </div>
+
+  <div class="q" id="q1">
+    <div class="stem">2. Lauras Gedanke «Meine Statistik-Kenntnisse sind völlig eingerostet» [11] ist ein Beispiel für...</div>
+    <div class="opts">
+      <label><input type="radio" name="q1" value="0"> Zugehörigkeit (−)</label>
+      <label><input type="radio" name="q1" value="1"> Autonomie (+)</label>
+      <label><input type="radio" name="q1" value="2"> Kompetenz (−)</label>
+      <label><input type="radio" name="q1" value="3"> Kompetenz (+)</label>
+    </div>
+  </div>
+
+  <div class="q" id="q2">
+    <div class="stem">3. «Die Lehrerin war beeindruckt von meinem Bericht» [5] zeigt laut SDT...</div>
+    <div class="opts">
+      <label><input type="radio" name="q2" value="0"> Autonomie (+)</label>
+      <label><input type="radio" name="q2" value="1"> Kompetenz (+)</label>
+      <label><input type="radio" name="q2" value="2"> Zugehörigkeit (+)</label>
+      <label><input type="radio" name="q2" value="3"> Kompetenz (−)</label>
+    </div>
+  </div>
+
+  <div class="q" id="q3">
+    <div class="stem">4. Annas Anruf am Abend («Ich glaube an dich» [14]) führt bei Laura primär zu einer...</div>
+    <div class="opts">
+      <label><input type="radio" name="q3" value="0"> Befriedigung des Bedürfnisses nach Zugehörigkeit (+)</label>
+      <label><input type="radio" name="q3" value="1"> Frustration der Autonomie (−)</label>
+      <label><input type="radio" name="q3" value="2"> Erhöhung der externalen Regulation</label>
+      <label><input type="radio" name="q3" value="3"> Kompetenz-Frustration (−)</label>
+    </div>
+  </div>
+
+  <div class="q" id="q4">
+    <div class="stem">5. Laut SDT: Was passiert, wenn alle 3 psychologischen Grundbedürfnisse (Autonomie, Kompetenz, Zugehörigkeit) befriedigt werden?</div>
+    <div class="opts">
+      <label><input type="radio" name="q4" value="0"> Kontrollierte Regulation nimmt zu</label>
+      <label><input type="radio" name="q4" value="1"> Amotivation entsteht</label>
+      <label><input type="radio" name="q4" value="2"> Intrinsische Motivation, Wachstum und Wohlbefinden steigen</label>
+      <label><input type="radio" name="q4" value="3"> Extrinsische Motivation erreicht ihren Höhepunkt</label>
+    </div>
+  </div>
+
+  <div class="q" id="q5">
+    <div class="stem">6. Welche Textstelle zeigt eine deutliche Frustration des Bedürfnisses nach Zugehörigkeit (−)?</div>
+    <div class="opts">
+      <label><input type="radio" name="q5" value="0"> «Mein Antrag für eine Fortbildung in Forschungsmethoden wurde abgelehnt»</label>
+      <label><input type="radio" name="q5" value="1"> «...dass die Kolleginnen am Wochenende zusammen essen waren – ohne mich einzuladen»</label>
+      <label><input type="radio" name="q5" value="2"> «Ich habe seit drei Jahren nichts Wissenschaftliches geschrieben»</label>
+      <label><input type="radio" name="q5" value="3"> «Ich wollte vorschlagen, dass wir die Fälle im Team verteilen»</label>
+    </div>
+  </div>
+
+  <div class="q" id="q6">
+    <div class="stem">7. Was drückt der Satz «endlich fragt mich mal jemand, was ICH will» [9] nach Frau Meiers Projektvorschlag laut SDT aus?</div>
+    <div class="opts">
+      <label><input type="radio" name="q6" value="0"> Eine Befriedigung des Bedürfnisses nach Autonomie (+).</label>
+      <label><input type="radio" name="q6" value="1"> Ein Anzeichen für aufkommende Amotivation.</label>
+      <label><input type="radio" name="q6" value="2"> Eine Frustration der Zugehörigkeit (−).</label>
+      <label><input type="radio" name="q6" value="3"> Reine externale Regulation durch Frau Meier.</label>
+    </div>
+  </div>
+
+  <div class="q" id="q7">
+    <div class="stem">8. Laura muss Sarahs Einladung zum After-Work-Drink absagen [10]. Aus Sicht der SDT entsteht ihr negativer Gefühlszustand («verliere den Anschluss») dadurch, dass...</div>
+    <div class="opts">
+      <label><input type="radio" name="q7" value="0"> ...die Erwartungen von Sarah eine starke introjizierte Regulation (Schuldgefühle) auslösen.</label>
+      <label><input type="radio" name="q7" value="1"> ...der externale Arbeitsdruck (Bericht für Müller) die Befriedigung ihres Bedürfnisses nach Zugehörigkeit verhindert.</label>
+      <label><input type="radio" name="q7" value="2"> ...sie das Bedürfnis nach Autonomie aufgibt, um ihre Kompetenz zu steigern.</label>
+      <label><input type="radio" name="q7" value="3"> ...After-Work-Drinks grundsätzlich die intrinsische Motivation für den nächsten Arbeitstag senken.</label>
+    </div>
+  </div>
+
+  <button class="submit" onclick="check()">✓ Prüfen</button>
+  <div class="score" id="score"></div>
+  <div class="result" id="result"></div>
+</div>
+
+</div>
+
+<script>
+function check() {
+  // Richtige Antworten für Q1 bis Q8 (Indizes: 0=A, 1=B, 2=C, 3=D)
+  const correctAnswers = [1, 2, 1, 0, 2, 1, 0, 1];
+  let okCount = 0;
+  const total = correctAnswers.length;
+
+  for (let i = 0; i < total; i++) {
+    const questionDiv = document.getElementById('q' + i);
+    const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+    
+    questionDiv.classList.remove('ok', 'bad');
+    
+    if (!selectedOption) {
+      questionDiv.classList.add('bad');
+    } else if (parseInt(selectedOption.value) === correctAnswers[i]) {
+      questionDiv.classList.add('ok');
+      okCount++;
+    } else {
+      questionDiv.classList.add('bad');
+    }
+  }
+
+  document.getElementById('score').textContent = okCount + '/' + total + ' richtig';
+  const resultDiv = document.getElementById('result');
+  
+  if (okCount === total) {
+    resultDiv.className = 'result win';
+    resultDiv.innerHTML = `<h2>🎉 Alle richtig!</h2><div class="code">WER</div><p class="hint">Gebt dieses Codewort jetzt im Dashboard ein!</p>`;
+  } else {
+    resultDiv.className = 'result fail';
+    resultDiv.innerHTML = `<h2>Noch nicht komplett</h2><p style="color:#c9d1d9">${okCount}/${total} richtig. Korrigiert die rot markierten Fragen und prüft erneut.</p>`;
+  }
+  
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>

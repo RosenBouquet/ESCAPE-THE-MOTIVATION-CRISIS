@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Room – Quiz</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;padding:12px}
+.wrap{max-width:620px;margin:0 auto}
+h1{color:#58a6ff;font-size:1.3rem;text-align:center;margin-bottom:4px}
+.sub{color:#8b949e;text-align:center;font-size:.85rem;margin-bottom:16px}
+.gsel{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px}
+.gbtn{padding:10px 12px;border-radius:8px;border:2px solid #30363d;background:#161b22;color:#c9d1d9;cursor:pointer;font-size:.85rem;font-weight:600;line-height:1.3;text-align:center;flex:1;min-width:100px}
+.gbtn:hover,.gbtn.sel{border-color:#58a6ff;background:#1f4068;color:#58a6ff}
+.panel{display:none}.panel.active{display:block}
+.intro{background:#1a2733;border-left:3px solid #58a6ff;padding:10px 14px;border-radius:4px;margin-bottom:14px;font-size:.85rem;color:#c9d1d9;line-height:1.5}
+.q{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;margin-bottom:10px}
+.q .stem{font-size:.88rem;font-weight:600;color:#c9d1d9;margin-bottom:8px;line-height:1.4}
+.opts label{display:block;padding:6px 10px;margin:2px 0;border-radius:5px;cursor:pointer;font-size:.83rem;transition:background .15s;border:1px solid transparent}
+.opts label:hover{background:#1a2733}
+.opts input{margin-right:8px}
+.q.ok{border-color:#238636;background:#0d2818}.q.bad{border-color:#f85149;background:#2d1215}
+.q.ok .stem::after{content:" ✅"}.q.bad .stem::after{content:" ❌"}
+.submit{display:block;width:100%;padding:12px;border-radius:8px;border:none;background:#238636;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;margin:14px 0}
+.submit:hover{background:#2ea043}
+.result{text-align:center;padding:20px;border-radius:10px;margin-top:14px;display:none}
+.result.win{display:block;background:#0d2818;border:2px solid #238636}
+.result h2{color:#3fb950;font-size:1.2rem}
+.result .code{font-size:2.5rem;font-weight:700;color:#fff;letter-spacing:6px;margin:10px 0}
+.result .hint{color:#c9d1d9;font-size:.85rem;line-height:1.5;margin-top:10px}
+.result.fail{display:block;background:#2d1215;border:2px solid #f85149}
+.result.fail h2{color:#f85149}
+.score{color:#8b949e;text-align:center;font-size:.85rem;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🔓 Escape the Motivation Crisis</h1>
+<p class="sub">Station: Motivation oder Volition?</p>
+
+<div class="panel active" id="panel"></div>
+</div>
+
+<script>
+const DATA = {
+    name: "Motivation oder Volition?",
+    task: "Ursachenanalyse",
+    code: "BIST",
+    intro: "Analysiert Lauras 8 Szenarien. Liegt das Problem bei der Motivation oder bei der Volition? Beantwortet alle Fragen richtig für euer Codewort.",
+    qs: [
+        {s:"1. «Ich sollte in der Schule bleiben, damit meine Eltern stolz sind.» Welches Problem liegt hier vor?", o:["Fehlende Motivation (Autonomie-Frustration)","Fehlende Volition (Lageorientierung)","Fehlende Motivation (Kompetenz)","Fehlende Volition (Handlungshemmung)"], a:0},
+        {s:"2. Laura will E-Mails schreiben, fühlt sich aber gelähmt und scrollt stattdessen auf Social Media. Was ist die Ursache?", o:["Fehlende Motivation (Kompetenz)","Fehlende Motivation (Zugehörigkeit)","Fehlende Volition (Handlungshemmung)","Fehlende Motivation (Autonomie)"], a:2},
+        {s:"3. «Ich bin einfach nicht kompetent genug für die Forschung.» Welches Problem bremst sie hier?", o:["Fehlende Motivation (Autonomie)","Fehlende Motivation (Zugehörigkeit)","Fehlende Motivation (Kompetenz)","Fehlende Volition (Lageorientierung)"], a:2},
+        {s:"4. Laura kann den Ärger über ein Meeting nicht herabregulieren und vernachlässigt ihre Ziele. Woran scheitert sie hier?", o:["Fehlende Volition (Blockade durch negativen Affekt)","Fehlende Motivation (Autonomie)","Fehlende Motivation (Zugehörigkeit)","Fehlende Volition (Überaktive Intuition)"], a:0},
+        {s:"5. Laura fühlt sich im Team nicht wertgeschätzt und als Außenseiterin. Was ist die Ursache für ihren Energieverlust?", o:["Fehlende Motivation (Kompetenz)","Fehlende Motivation (Autonomie)","Fehlende Motivation (Zugehörigkeit)","Fehlende Volition (Handlungshemmung)"], a:2},
+        {s:"6. Laura erledigt administrative Kleinigkeiten statt das Exposé, obwohl sie hochmotiviert ist. Was fehlt ihr?", o:["Motivation (Zugehörigkeit)","Volitionale Effizienz (Absichtsgedächtnis überaktiviert)","Motivation (Autonomie)","Motivation (Kompetenz)"], a:1},
+        {s:"7. Laura arbeitet nur noch, um Ärger zu vermeiden und ihr Gehalt zu bekommen. Welches Problem blockiert hier ihr Wachstum?", o:["Fehlende Motivation (Introjektion)","Fehlende Motivation (Identifikation)","Fehlende Motivation (Externe Regulation)","Fehlende Volition (Handlungshemmung)"], a:2},
+        {s:"8. Laura wartet auf die 'perfekte Inspiration' und bricht bei Müdigkeit sofort ab. Was hindert sie am Handeln?", o:["Fehlende Volition (mangelnde Affektregulation)","Fehlende Motivation (Kompetenz)","Fehlende Volition (überaktive Objekterkennung)","Fehlende Motivation (Zugehörigkeit)"], a:0}
+    ]
+};
+
+function renderQuiz() {
+    const panel = document.getElementById('panel');
+    let html = `<div class="intro"><strong>${DATA.name}</strong><br>${DATA.intro}</div>`;
+    
+    DATA.qs.forEach((q, i) => {
+        html += `<div class="q" id="q${i}"><div class="stem">${q.s}</div><div class="opts">`;
+        q.o.forEach((o, j) => {
+            html += `<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`;
+        });
+        html += `</div></div>`;
+    });
+    
+    html += `<button class="submit" onclick="check()">✓ Prüfen</button><div class="score" id="score"></div><div class="result" id="result"></div>`;
+    panel.innerHTML = html;
+}
+
+function check() {
+    let ok = 0;
+    DATA.qs.forEach((q, i) => {
+        const el = document.getElementById('q'+i);
+        const s = document.querySelector(`input[name="q${i}"]:checked`);
+        el.classList.remove('ok', 'bad');
+        if (!s) { el.classList.add('bad'); return; }
+        if (parseInt(s.value) === q.a) { el.classList.add('ok'); ok++; }
+        else el.classList.add('bad');
+    });
+    
+    const t = DATA.qs.length;
+    document.getElementById('score').textContent = ok + '/' + t + ' richtig';
+    const r = document.getElementById('result');
+    
+    if (ok === t) {
+        r.className = 'result win';
+        r.innerHTML = `<h2>🎉 Alle richtig!</h2><div class="code">${DATA.code}</div><p class="hint">Notiert euch das Codewort für den finalen Lösungssatz!</p>`;
+    } else {
+        r.className = 'result fail';
+        r.innerHTML = `<h2>Noch nicht komplett</h2><p style="color:#c9d1d9">${ok}/${t} richtig. Korrigiert die roten Fragen.</p>`;
+    }
+    r.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+window.onload = renderQuiz;
+</script>
+</body>
+</html>
