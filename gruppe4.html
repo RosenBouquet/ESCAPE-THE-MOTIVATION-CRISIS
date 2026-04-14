@@ -98,7 +98,7 @@ function check() {
         r.innerHTML = `<h2>🎉 Alle richtig!</h2><div class="code">${DATA.code}</div><p class="hint">Notiert euch das Codewort auf eurem Zettel!</p>`;
     } else {
         r.className = 'result fail';
-        r.innerHTML = `<h2>Noch nicht komplett</h2><p style="color:#c9d1d9">${ok}/${t} richtig. Korrigiert die roten Fragen.</p>`;
+        r.innerHTML = `<h2>Noch nicht komplett</h2><p style="color:#c9d1d9">${ok}/${t} richtig.  Korrigiert die rot markierten Fragen und prüft erneut.</p>`;
     }
     r.scrollIntoView({behavior: 'smooth', block: 'center'});
 }
