@@ -35,7 +35,9 @@ h1{color:#58a6ff;font-size:1.3rem;text-align:center;margin-bottom:4px}
 </head>
 <body>
 <div class="wrap">
-<h1>🔓 Escape the Motivation Crisis</h1>
+<h1>     
+    <img src="lock.png" alt="Icon" height="30" style="margin-right: 2px;">
+    Escape the Motivation Crisis</h1>
 <p class="sub">Station: Gedankenblasen – Lauras psychische Systeme</p>
 
 <div class="panel active" id="panel"></div>
@@ -92,7 +94,7 @@ function check() {
     
     if (ok === t) {
         r.className = 'result win';
-        r.innerHTML = `<h2>🎉 Alle richtig!</h2><div class="code">${DATA.code}</div><p class="hint">Gebt dieses Codewort jetzt im Dashboard ein!</p>`;
+        r.innerHTML = `<h2>🎉 Alle richtig!</h2><div class="code">${DATA.code}</div><p class="hint">Notiert euch das Codewort auf eurem Zettel!</p>`;
     } else {
         r.className = 'result fail';
         r.innerHTML = `<h2>Noch nicht komplett</h2><p style="color:#c9d1d9">${ok}/${t} richtig. Korrigiert die roten Fragen.</p>`;
