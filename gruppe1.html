@@ -31,8 +31,11 @@ h1{color:#58a6ff;font-size:1.3rem;text-align:center;margin-bottom:4px}
 </head>
 <body>
 <div class="wrap">
-<h1>🔓 Escape the Motivation Crisis</h1>
-<p class="sub">Beantwortet die Fragen zu eurer Aufgabe</p>
+<h1> 
+     <img src="lock.png" alt="Icon" height="30" style="margin-right: 2px;">
+    Escape the Motivation Crisis
+</h1>
+<div style="height: 30px;"></div>
 
 <div class="intro">
   <strong>Gruppe 1 – WhatsApp-Chats & E-Mails</strong><br>
@@ -157,7 +160,7 @@ function check() {
   
   if (okCount === total) {
     resultDiv.className = 'result win';
-    resultDiv.innerHTML = `<h2>🎉 Alle richtig!</h2><div class="code">WERDE</div><p class="hint">Gebt dieses Codewort jetzt im Dashboard ein!</p>`;
+    resultDiv.innerHTML = `<h2>🎉 Alle richtig!</h2><div class="code">WERDE</div><p class="hint">Notiert euch das Codewort auf eurem Zettel!</p>`;
   } else {
     resultDiv.className = 'result fail';
     resultDiv.innerHTML = `<h2>Noch nicht komplett</h2><p style="color:#c9d1d9">${okCount}/${total} richtig. Korrigiert die rot markierten Fragen und prüft erneut.</p>`;
